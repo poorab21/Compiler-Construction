@@ -1,0 +1,5 @@
+use "iostream"
+func(int) main()
+{
+write("Hello World");
+}
