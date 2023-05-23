@@ -1,0 +1,21 @@
+num++;
+num--;
+if(n == 1)
+else if(n>12)
+int:num;
+long[12]:num;
+if(num==1 and n<=12)
+else if(n>12 or n< num2 and n !=12)
+break;
+continue;
+until(i>=10)
+for(i=0;i<12;i++)
+num = 12 * num1;
+num = num2;
+num = 1;
+num = 100 * 12 + num3;
+func(void) main()
+func(void) main(int:a)
+return num;
+return 12;
+use "iostream"
