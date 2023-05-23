@@ -1,6 +1,1 @@
-case(num)
-{
-[12.1]:break;
-["hello"]:break;
-[default]:break;
-}
+if(num!=-1)
