@@ -1,0 +1,4 @@
+(keyword)(separator)(identifier)(separator)
+(separator)
+(separator)(S_literal)(separator)(separator)(keyword)(separator)
+(separator)
