@@ -1,1 +1,2 @@
-(C_Literal)
+(keyword) (identifier)(separator)(separator)
+(keyword)(separator)(keyword)(separator) (identifier)(separator)(separator)
