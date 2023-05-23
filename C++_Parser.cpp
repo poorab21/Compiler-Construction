@@ -87,7 +87,7 @@ int CONDITIONS(std::string instruction,int lookahead)
 	{
 		lookahead = IsIdentifier(instruction,lookahead);
 	}
-	else if(IsConstant(instruction,lookahead) != lookahead) 
+	else if(IsConstant(instruction,lookahead) != -1) 
 	{	
 		lookahead = IsConstant(instruction,lookahead);
 	}
@@ -209,7 +209,7 @@ int VARIABLE(std::string instruction,int lookahead)
 		lookahead = IsSeparator(instruction,lookahead);
 	}
 	else return -1;
-	if(instruction[lookahead]=='$' && instruction.substr(0,5) != "write" && instruction.substr(0,4) != "read" && instruction.substr(0,2) != "if" && instruction.substr(0,4) != "else" && instruction.substr(0,5) != "until") return lookahead;
+	if(instruction[lookahead]=='$' && instruction.substr(0,5) != "write" && instruction.substr(0,4) != "read") return lookahead;
 	else return -1;
 }
 
@@ -267,12 +267,11 @@ int VALUE(std::string instruction,int lookahead)
 		lookahead = IsIdentifier(instruction,lookahead);
 		lookahead = VALUE_2(instruction,lookahead);
 	}
-	else if(IsConstant(instruction,lookahead) != lookahead)
+	else 
 	{
 		lookahead = IsConstant(instruction,lookahead);
 		lookahead = VALUE_2(instruction,lookahead);
 	}
-	else if(Match(instruction,lookahead,';') != -1) return -1;
 	return lookahead;
 }
 
@@ -430,6 +429,7 @@ int FOR(std::string instruction,int lookahead)
 }
 
 
+
 int FUNC(std::string instruction,int lookahead)
 {
 	lookahead = IsKeyWord(instruction,lookahead);
@@ -444,6 +444,7 @@ int FUNC(std::string instruction,int lookahead)
 	if(instruction[lookahead] != '$') return -1;
 	else return lookahead;
 }
+
 int FUNC_CALL(std::string instruction,int lookahead)
 {
 	lookahead = IsIdentifier(instruction,lookahead);
@@ -454,6 +455,7 @@ int FUNC_CALL(std::string instruction,int lookahead)
 	if(instruction[lookahead] != '$') return -1;
 	else return lookahead;
 }
+
 void S(std::string instruction,int &lookahead)
 {
 	if(CONTINUE_BREAK(instruction,lookahead) != -1) lookahead = CONTINUE_BREAK(instruction,lookahead);
@@ -478,8 +480,7 @@ void S(std::string instruction,int &lookahead)
 }
 int main()
 {
-	std::ifstream fileholder("Source_File(Lexical Error).ANP");
-	std::ofstream fileholder2("output.txt");
+	std::ifstream fileholder("Source_File(Syntax Error).ANP");
 	std::string instruction = "";
 	int lookahead = 0,line = 0;
 	while(getline(fileholder,instruction))
@@ -489,16 +490,12 @@ int main()
 		S(instruction,lookahead);
 		if(instruction[lookahead] != '$')
 		{
-			Lexical_Error(instruction,lookahead);
-			fileholder2<<"Syntax Error in Line "<<line<<std::endl;
-			fileholder.close();
-			fileholder2.close();
+			std::cout<<"Syntax Error in Line "<<line<<std::endl;
 			return 0;
 		}
 		instruction = "";
 		lookahead = 0;
 	}
-	fileholder2<<"Parsing Successful"<<std::endl;
+	std::cout<<"Parsing Successful"<<std::endl;
 	fileholder.close();
-	fileholder2.close();
 }

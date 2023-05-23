@@ -1,6 +1,5 @@
 #include<iostream>
 #include<fstream>
-#include<stdlib.h>
 int length = 0;
 std::string keywords[21] = {"char","break","const","continue","double","default","else","float","int","str",
 						"if","long","case","func","for","until","write","read","readLine","return","void"};
@@ -275,31 +274,112 @@ int Is_Arithmetic(std::string char_stream,int forward)
 	return -1;
 }
 
-void Lexical_Error(std::string stream,int begin)
-{
-	while(begin<stream.length())
-	{
-		if(stream[begin]=='\'') begin = CHAR(stream,begin+1);
-		else if(IsDirective(stream,begin) != -1) begin = IsDirective(stream,begin);
-		else if(IsKeyWord(stream,begin) != -1) begin = IsKeyWord(stream,begin);
-		else if(Is_Boolean(stream,begin) != -1) begin = Is_Boolean(stream,begin);
-		else if(IsIdentifier(stream,begin) != -1) begin = IsIdentifier(stream,begin);
-		else if(IsSeparator(stream,begin) != -1) begin = IsSeparator(stream,begin);
-		else if(Is_Arithmetic(stream,begin) != -1) begin = Is_Arithmetic(stream,begin);
-		else if(Is_Assignment(stream,begin) != -1) begin = Is_Assignment(stream,begin);
-		else if(Is_Comparison(stream,begin) != -1) begin = Is_Comparison(stream,begin);
-		else if(Is_Increment(stream,begin) != -1) begin = Is_Increment(stream,begin);
-		else if(Is_Decrement(stream,begin) != -1) begin = Is_Decrement(stream,begin);
-		else if(stream[begin]=='.' || IsDigit(stream[begin])) begin = IsConstant(stream,begin);
-		else if(stream[begin]=='"') begin = STRING(stream,begin+1);
-		else if(stream[begin]==32) begin++;
-		else if(stream[begin]=='$') return;
-		else 
-		{
-			std::ofstream fileholder("output.txt");
-			fileholder<<"Lexical Error"<<std::endl;
-			fileholder.close();
-			exit(0);
-		}
-	}
-}
+//int main()
+//{
+//	std::ofstream fileholder("Tokens.txt");
+//	std::ifstream source_file("Compiler.pg");
+//	int begin = 0,forward = 0;
+//	std::string stream = "";
+//	while(getline(source_file,stream))
+//	{
+//		while(begin<stream.length())
+//		{
+//			if(stream[begin]>='0' && stream[begin]<='9' || stream[begin]=='.')
+//			{	
+//				forward = IsConstant(stream,forward) + 1;
+//				begin = IsConstant(stream,forward) + 1;
+//				fileholder<<"(constant)";
+//			}
+//			else if(Is_Arithmetic(stream,begin) != -1)
+//			{
+//				forward = Is_Arithmetic(stream,begin);
+//				begin = Is_Arithmetic(stream,begin);
+//				fileholder<<"(Arithmetic_Operator)";
+//			}
+//			else if(Is_Boolean(stream,begin) != -1)
+//			{
+//				forward = Is_Boolean(stream,begin);
+//				begin = Is_Boolean(stream,begin);
+//				fileholder<<"(Boolean_Operator)";
+//			}
+//			else if(Is_Assignment(stream,begin) != -1)
+//			{
+//				forward = Is_Assignment(stream,begin);
+//				begin = Is_Assignment(stream,begin);
+//				fileholder<<"(Assignment_Operator)";
+//			}
+//			else if(Is_Increment(stream,begin) != -1)
+//			{
+//				forward = Is_Increment(stream,begin);
+//				begin = Is_Increment(stream,begin);
+//				fileholder<<"(Increment_Operator)";
+//			}
+//			else if(Is_Decrement(stream,begin) != -1)
+//			{
+//				forward = Is_Decrement(stream,begin);
+//				begin = Is_Decrement(stream,begin);
+//				fileholder<<"(Decrement_Operator)";
+//			}
+//			else if(Is_Comparison(stream,begin) != -1)
+//			{
+//				forward = Is_Comparison(stream,begin);
+//				begin = Is_Comparison(stream,begin);
+//				fileholder<<"(Comparison_Operator)";
+//			}
+//			else if(stream[begin]=='"')
+//			{
+//				begin = IsLiteral_S(stream,forward+1);
+//				forward = IsLiteral_S(stream,forward+1);
+//				fileholder<<"(S_Literal)";
+//			}
+//			else if(IsSeparator(stream,begin)==true)
+//			{
+//				fileholder<<"(Separator)";
+//				begin++;
+//				forward++;
+//			}
+//			else if(IsAlpha(stream[begin]) || stream[begin]=='_')
+//			{
+//				int result = IsKeyWord(stream,forward);
+//				if(IsDirective(stream,forward) != -1)
+//				{
+//					begin = IsDirective(stream,forward);
+//					forward = IsDirective(stream,forward);
+//					fileholder<<"(Preprocessor_Directive)";
+//				}
+//				else if(result != -1)
+//				{
+//					fileholder<<stream.substr(begin,length);
+//					begin = result;
+//					forward = result;
+//				}
+//				else
+//				{
+//					begin = IsIdentifier(stream,forward) + 1;
+//					forward = IsIdentifier(stream,forward) + 1;
+//					fileholder<<"(Identifier)";	
+//				}
+//			}
+//			else if(stream[begin]=='\'')
+//			{
+//				int result = IsLiteral_C(stream,forward+1);
+//				if(result != -1)
+//				{
+//					begin = result;
+//					forward = result;
+//					fileholder<<"(C_Literal)";
+//				}
+//			}
+//			else
+//			{
+//				begin++;
+//				forward=begin;
+//			}
+//		}
+//		begin = 0;
+//		forward = 0;
+//		fileholder<<std::endl;
+//	}
+//	fileholder.close();
+//	source_file.close();
+//}

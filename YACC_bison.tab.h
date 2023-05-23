@@ -56,8 +56,7 @@
      SEPARATOR_2 = 272,
      CONTINUE_BREAK = 273,
      FUNCTION = 274,
-     WRITE_READ_COMMAND = 275,
-     RETURN_TYPE = 276
+     WRITE_READ_COMMAND = 275
    };
 #endif
 
@@ -75,7 +74,7 @@ char* sval;
 
 
 /* Line 1676 of yacc.c  */
-#line 79 "bison.tab.h"
+#line 78 "bison.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

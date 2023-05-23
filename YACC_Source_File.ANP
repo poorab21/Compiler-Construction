@@ -1,5 +1,15 @@
 use "iostream"
 func(int) main()
 {
-write("Hello World");
+int:num;
+int:num2;
+
+num = 12 + num;
+num2 = num * 100 / 10;
+
+if(num<num2)
+{
+write(num," is greater than ",num2);
+}
+else if(num==1 and num==3) 
 }

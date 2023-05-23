@@ -1,5 +1,5 @@
 use "iostream"
-func(int) main()
+func(void) main()
 {
-write("Hello World");
+write("hello world");
 }

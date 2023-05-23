@@ -7,7 +7,7 @@
 %}
 %option noyywrap
 
-keywords (char|const|double|default|else|float|int|str|if|long|case|void|for|until)
+keywords (char|const|double|return|default|else|float|int|str|if|long|case|void|for|until)
 arithmetic_operators (\+|\/|\*|\-|\%|\^|\*=|\/=|\%=|\^=|\&|\&=|\|=|\|)
 comparison_operators (\==|\!=|\>=|\<=|\>|\<)
 boolean_operators (or|and)
@@ -17,13 +17,11 @@ assignment_operator (\=)
 digits (0|1|2|3|4|5|6|7|8|9)
 alphabets [a-zA-Z]
 alphanums [a-zA-Z0-9]
-separators (\;|\(|\)|\[|\]|\,|\:)
+separators (\;|\{|\}|\(|\)|\[|\]|\,|\:)
 pre-processor (use)
 continue_break (continue|break)
 input_output (read|readLine|write)
-return_type (return)
 %%
-{return_type} {return RETURN_TYPE;}
 (func) {return FUNCTION;}
 {continue_break} {return CONTINUE_BREAK;}
 {input_output} { return WRITE_READ_COMMAND;}
