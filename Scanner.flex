@@ -1,13 +1,7 @@
 %{
 	#define yywrap() 1
-	extern int yylex();
-	#include<iostream>
-	#include "bison.tab.h"
-	#include<stdio.h>
 %}
-%option noyywrap
-
-keywords (char|const|double|default|else|float|int|str|if|long|case|void|for|until)
+keywords (char|break|const|continue|double|default|else|float|int|str|if|long|case|func|for|until|write|read|readLine)
 arithmetic_operators (\+|\/|\*|\-|\%|\^|\*=|\/=|\%=|\^=|\&|\&=|\|=|\|)
 comparison_operators (\==|\!=|\>=|\<=|\>|\<)
 boolean_operators (or|and)
@@ -17,29 +11,26 @@ assignment_operator (\=)
 digits (0|1|2|3|4|5|6|7|8|9)
 alphabets [a-zA-Z]
 alphanums [a-zA-Z0-9]
-separators (\;|\(|\)|\[|\]|\,|\:)
+separators (\;|\{|\}|\(|\)|\[|\]|\,|\:)
 pre-processor (use)
-continue_break (continue|break)
-input_output (read|readLine|write)
-return_type (return)
 %%
-{return_type} {return RETURN_TYPE;}
-(func) {return FUNCTION;}
-{continue_break} {return CONTINUE_BREAK;}
-{input_output} { return WRITE_READ_COMMAND;}
-{pre-processor} { yylval.sval = "(pre-processor directive)";return DIRECTIVE;}
-\"[^\"]+\"|\"\" { yylval.sval = "(S_literal)";return STRING;}
-{keywords} {yylval.sval = yytext; return KEYWORD;}
-{boolean_operators} { yylval.sval = yytext; return BOOLEAN_OP; }
-({alphabets}|\_)({alphanums}|\_)* { yylval.sval = yytext; return IDENTIFIER; }
-(\;|\(|\)|\[|\]|\,|\:) { yylval.sval = yytext; return SEPARATOR; }
-{digits}+|{digits}+\.{digits}+|\.{digits}+ { yylval.sval = yytext; return CONSTANT; }
-'\\(n|r|t|b|f|v|0|\'|\"|\\)'|\'[^\\]\' { yylval.sval = yytext; return CHARACTER; }
-{assignment_operator} { yylval.sval = yytext; return ASSIGNMENT; }
-(\+|\/|\*|\-|\%|\^|\&|\|) { yylval.sval = yytext; return OP; }
-(\*=|\/=|\%=|\^=|\&=|\+=|\-=|\|=) { yylval.sval = yytext; return OP_2; }
-(\++) { yylval.sval = yytext; return INCREMENT; }
-(\--) { yylval.sval = yytext; return DECREMENT; }
-{comparison_operators} { yylval.sval = yytext; return COMPARISON; }
-(\{|\}) { return SEPARATOR_2; }
+{pre-processor} printf("(pre-processor directive)",yytext);
+'\\(n|r|t|b|f|v|0|\'|\"|\\)'|\'[^\\]\' printf("(C_literal)",yytext);
+{arithmetic_operators} printf("(arithmetic_operator)",yytext);
+{comparison_operators} printf("(comparison_operator)",yytext);
+{boolean_operators} printf("(boolean_operator)",yytext);
+{increment_operators} printf("(increment_operator)",yytext);
+{decrement_operators} printf("(decrement_operator)",yytext);
+{assignment_operator} printf("(assignment_operator)",yytext);
+\"[^\"]+\"|\"\" printf("(S_literal)",yytext);
+{digits}+|{digits}+\.{digits}+|\.{digits}+ printf("(constant)",yytext);
+{keywords} printf("(keyword)",yytext);
+({alphabets}|\_)({alphanums}|\_)* printf("(identifier)",yytext);
+(\;|\{|\}|\(|\)|\[|\]|\,|\:) printf("(separator)",yytext);
 %%
+int main()
+{
+yyin = fopen("compiler.pg","r");
+yyout = freopen("Tokens.txt","w",stdout);
+yylex();
+}
